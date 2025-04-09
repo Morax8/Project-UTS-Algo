@@ -170,18 +170,22 @@ void checkout(char *username, int *point, Cart **head, Cart **tail)
     if (*point < 1000)
     {
         totalPrice *= 0.98; // 2% discount
+        printf("You are a Bronze member. You get a 2%% discount.\n");
     }
     else if (*point < 5001) // ini nangkep 1000 - 5000
     {
         totalPrice *= 0.97; // 3% discount
+        printf("You are a Silver member. You get a 3%% discount.\n");
     }
     else if (*point < 10000) // ini nangkep 5001 - 9999
     {
         totalPrice *= 0.96; // 4% discount
+        printf("You are a Gold member. You get a 4%% discount.\n");
     }
     else // 10000 ke atas
     {
         totalPrice *= 0.95; // 5% discount
+        printf("You are a Platinum member. You get a 5%% discount.\n");
     }
 
     // Ask if user wants to use points
