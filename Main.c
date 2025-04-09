@@ -45,13 +45,13 @@ void addToCart(Cart **cartHead);
 const char *getRank(int point)
 {
     if (point >= 1 && point <= 1000)
-        return "Bronze";
+        return "Bronze"; // diskon 2%
     else if (point >= 1001 && point <= 5000)
-        return "Silver";
+        return "Silver"; // diskon 3%
     else if (point >= 5001 && point <= 10000)
-        return "Gold";
+        return "Gold"; // diskon 4%
     else if (point > 10000)
-        return "Platinum";
+        return "Platinum"; // diskon 5%
     else
         return "Unknown Rank";
 }
@@ -166,6 +166,24 @@ void checkout(char *username, int *point, Cart **head, Cart **tail)
     // Calculate earned points (1 point for every 10,000 Rupiah)
     earnedPoints = (int)(totalPrice / 10000);
 
+    // discount based on rank points
+    if (*point < 1000)
+    {
+        totalPrice *= 0.98; // 2% discount
+    }
+    else if (*point < 5001) // ini nangkep 1000 - 5000
+    {
+        totalPrice *= 0.97; // 3% discount
+    }
+    else if (*point < 10000) // ini nangkep 5001 - 9999
+    {
+        totalPrice *= 0.96; // 4% discount
+    }
+    else // 10000 ke atas
+    {
+        totalPrice *= 0.95; // 5% discount
+    }
+
     // Ask if user wants to use points
     int usePoints = 0;
     if (*point > 0)
@@ -186,6 +204,10 @@ void checkout(char *username, int *point, Cart **head, Cart **tail)
     // Calculate discount from points
     float pointDiscount = usePoints * 1000.0;
     float finalPrice = totalPrice - pointDiscount;
+    if (finalPrice < 0)
+    {
+        finalPrice = 0; // Prevent negative final price
+    }
 
     // Display summary
     printf("--------------------------------------\n");
